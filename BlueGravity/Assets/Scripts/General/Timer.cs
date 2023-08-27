@@ -25,7 +25,7 @@ namespace GravityBlue.General
         {
             if (Remaining <= 0) return;
                 Remaining = Mathf.Max(0, Remaining - deltaTime);
-            if (Remaining <= 0) OnFinish.Invoke();
+            if (Remaining <= 0) OnFinish?.Invoke();
         }
         public void Restart()
         {
