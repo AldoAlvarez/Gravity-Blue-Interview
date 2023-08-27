@@ -10,6 +10,8 @@ namespace GravityBlue.Movement
         #region UNITY METHODS
         private void Start()
         {
+            SetMovementDirection(Vector2.zero);
+
             animTime.OnFinish = () => {
                 PrepareMovement();
             };
@@ -20,6 +22,11 @@ namespace GravityBlue.Movement
             animTime.Tick(Time.deltaTime);
 
             MoveAvatar();
+
+            //the elements will keep the last facing direction
+            var mag = direction.magnitude;
+            if (mag < 0.1f) return;
+
             var radians = Mathf.Atan2(direction.y, direction.x);
             float degrees = radians * Mathf.Rad2Deg;
             var rotation = Quaternion.AngleAxis(degrees, Vector3.forward);

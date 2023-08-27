@@ -17,33 +17,27 @@ namespace GravityBlue
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.P)) {
-                var item = itemsPool.GetNewObject();
-                item.transform.position = spawnPoint.position;
-                item.GetComponent<GameItem>().Initialize(gold);
-                item.Spawn();
-            }
-            if (Input.GetKeyDown(KeyCode.O))
-            {
-                var item = itemsPool.GetNewObject();
-                item.transform.position = spawnPoint.position;
-                item.GetComponent<GameItem>().Initialize(diamond);
-                item.Spawn();
-            }
-            if (Input.GetKeyDown(KeyCode.Backspace)) DespawnAll();
         }
         #endregion
 
         #region VARIABLES
-        public static GameItemsController Instance { get; private set; }
+        public static GameItemsController Instance => instance;
         private static GameItemsController instance;
         [SerializeField] private Transform spawnPoint;
         [SerializeField] private ObjectPool itemsPool;
-        [SerializeField] private GameItemData gold;
-        [SerializeField] private GameItemData diamond;
         #endregion
 
         #region PUBLIC METHODS
+        public void SpawnItem(GameItemData config, Transform point) {
+            var item = itemsPool.GetNewObject();
+            item.transform.position = point.position;
+            item.GetComponent<GameItem>().Initialize(config);
+            item.Spawn();
+        }
+        public void SpawnItem(GameItemData config)
+        {
+            SpawnItem(config, spawnPoint);
+        }
         public void DespawnAll()
         {
             var spawnedItems = FindObjectsOfType<PoolableObject>();

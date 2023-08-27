@@ -30,6 +30,7 @@ namespace GravityBlue.NPCs
         #region PUBLIC METHODS
         public void Interact()
         {
+            PlayerInputController.Instance.DisableGeneralControls();
             ShopUI.Instance.Show();
             ShopUI.Instance.SetGreeting(greetingMessage);
             //Shop.Instance.SetSellBuyValues(SellValue, BuyValue);

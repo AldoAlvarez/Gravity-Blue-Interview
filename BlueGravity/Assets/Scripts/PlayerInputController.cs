@@ -8,19 +8,25 @@ namespace GravityBlue
     public class PlayerInputController : MonoBehaviour
     {
         #region UNITY METHODS
+        private void Awake()
+        {
+            if (instance != null) Destroy(this);
+            else instance = this;
+        }
         private void OnEnable()
         {
-            if (controls == null) { 
+            if (controls == null)
+            {
                 controls = new PlayerControls();
             }
             controls.Enable();
 
-            controls.Player.Move.performed += input=> movement.SetMovementDirection(input.ReadValue<Vector2>());
-            controls.Player.Move.canceled += input=> movement.SetMovementDirection(input.ReadValue<Vector2>());
+            controls.Player.Move.performed += input => movement.SetMovementDirection(input.ReadValue<Vector2>());
+            controls.Player.Move.canceled += input => movement.SetMovementDirection(input.ReadValue<Vector2>());
 
-            controls.Player.Interact.performed += input => {
+            controls.Player.Interact.performed += input =>
+            {
                 interaction.InteractWithObject();
-                DisableGeneralControls();
             };
         }
         private void OnDisable()
@@ -29,16 +35,18 @@ namespace GravityBlue
             controls.Player.Move.performed -= input => movement.SetMovementDirection(input.ReadValue<Vector2>());
             controls.Player.Move.canceled -= input => movement.SetMovementDirection(input.ReadValue<Vector2>());
 
-            controls.Player.Interact.performed -= input => { interaction.InteractWithObject(); DisableGeneralControls(); };
+            controls.Player.Interact.performed -= input => { interaction.InteractWithObject(); };
         }
 
         private void Update()
         {
-            
+
         }
         #endregion
 
         #region VARIABLES
+        public static PlayerInputController Instance => instance;
+        private static PlayerInputController instance;
         [SerializeField] private MovementController movement;
         [SerializeField] private Interaction.InteractionController interaction;
         private PlayerControls controls;
@@ -49,7 +57,8 @@ namespace GravityBlue
         {
             controls.Player.Disable();
         }
-        public void EnableGeneralControls() {
+        public void EnableGeneralControls()
+        {
             controls.Player.Enable();
         }
         #endregion
@@ -57,7 +66,7 @@ namespace GravityBlue
         #region PRIVATE METHODS
         private void method()
         {
-            
+
         }
         #endregion
     }
