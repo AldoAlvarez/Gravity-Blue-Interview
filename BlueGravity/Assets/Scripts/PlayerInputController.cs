@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using GravityBlue.Movement;
 
 namespace GravityBlue
 {
@@ -10,16 +10,26 @@ namespace GravityBlue
         #region UNITY METHODS
         private void OnEnable()
         {
-            controls = new PlayerControls();
+            if (controls == null) { 
+                controls = new PlayerControls();
+            }
             controls.Enable();
 
             controls.Player.Move.performed += input=> movement.SetMovementDirection(input.ReadValue<Vector2>());
             controls.Player.Move.canceled += input=> movement.SetMovementDirection(input.ReadValue<Vector2>());
+
+            controls.Player.Interact.performed += input => {
+                interaction.InteractWithObject();
+                DisableGeneralControls();
+            };
         }
         private void OnDisable()
         {
             controls.Disable();
             controls.Player.Move.performed -= input => movement.SetMovementDirection(input.ReadValue<Vector2>());
+            controls.Player.Move.canceled -= input => movement.SetMovementDirection(input.ReadValue<Vector2>());
+
+            controls.Player.Interact.performed -= input => { interaction.InteractWithObject(); DisableGeneralControls(); };
         }
 
         private void Update()
@@ -30,14 +40,17 @@ namespace GravityBlue
 
         #region VARIABLES
         [SerializeField] private MovementController movement;
+        [SerializeField] private Interaction.InteractionController interaction;
         private PlayerControls controls;
-        private int varA = 0;
         #endregion
 
         #region PUBLIC METHODS
-        public void Method()
+        public void DisableGeneralControls()
         {
-            
+            controls.Player.Disable();
+        }
+        public void EnableGeneralControls() {
+            controls.Player.Enable();
         }
         #endregion
 

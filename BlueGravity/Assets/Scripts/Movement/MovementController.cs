@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GravityBlue
+namespace GravityBlue.Movement
 {
     public class MovementController : MonoBehaviour
     {
@@ -20,14 +20,20 @@ namespace GravityBlue
             animTime.Tick(Time.deltaTime);
 
             MoveAvatar();
+            var radians = Mathf.Atan2(direction.y, direction.x);
+            float degrees = radians * Mathf.Rad2Deg;
+            var rotation = Quaternion.AngleAxis(degrees, Vector3.forward);
+            foreach (var element in rotatableElements)
+                element.rotation = rotation;
         }
         #endregion
 
         #region VARIABLES
         [SerializeField, Range(1, 5)]
         private int speed = 1;
-        [SerializeField] private Timer animTime=new Timer(0.6f);
+        [SerializeField] private Timer animTime = new Timer(0.6f);
         [SerializeField] private Transform avatar;
+        [SerializeField] private Transform[] rotatableElements;
 
         private Vector3 direction;
         private Vector3 currentPos;

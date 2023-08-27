@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GravityBlue
+namespace GravityBlue.Movement
 {
-    public class PlayerMvementCollision : MonoBehaviour
+    public class PlayerMovementCollision : MonoBehaviour
     {
         #region UNITY METHODS
         private void Start()
