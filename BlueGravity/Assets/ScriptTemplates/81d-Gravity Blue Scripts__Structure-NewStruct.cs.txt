@@ -1,0 +1,9 @@
+#ROOTNAMESPACEBEGIN#
+namespace GravityBlue
+{
+    public interface #SCRIPTNAME#
+    {
+        void Method();
+    }
+}
+#ROOTNAMESPACEEND#
