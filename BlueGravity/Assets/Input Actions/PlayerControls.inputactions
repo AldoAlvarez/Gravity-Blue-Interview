@@ -711,6 +711,33 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "PlayerUI",
+            "id": "1bb88cc6-fa24-46cf-8c7e-a9159a66476d",
+            "actions": [
+                {
+                    "name": "Inventory",
+                    "type": "Button",
+                    "id": "35b9ac6e-15ba-45fb-ada3-2d07199e915d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "06e02d9a-d15a-4c06-8e0a-9a9317cb793a",
+                    "path": "<Keyboard>/i",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Inventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

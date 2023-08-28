@@ -15,20 +15,13 @@ namespace GravityBlue
 
             storage = new Storage();
         }
-
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.P)) { storage.RetrieveItem(1001); }
-            if (Input.GetKeyDown(KeyCode.O)) { storage.RetrieveItem(1002); }
-            if (Input.GetKeyDown(KeyCode.Y)) { storage.Clear(); }
-        }
         #endregion
 
         #region VARIABLES
         public static PlayerStorage Instance => instance;
         private static PlayerStorage instance;
 
-        private Storage storage;
+        public Storage storage { get; private set; }
         #endregion
 
         #region PUBLIC METHODS

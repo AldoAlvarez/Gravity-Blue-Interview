@@ -724,6 +724,33 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""PlayerUI"",
+            ""id"": ""1bb88cc6-fa24-46cf-8c7e-a9159a66476d"",
+            ""actions"": [
+                {
+                    ""name"": ""Inventory"",
+                    ""type"": ""Button"",
+                    ""id"": ""35b9ac6e-15ba-45fb-ada3-2d07199e915d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""06e02d9a-d15a-4c06-8e0a-9a9317cb793a"",
+                    ""path"": ""<Keyboard>/i"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Inventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -807,6 +834,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_UI_RightClick = m_UI.FindAction("RightClick", throwIfNotFound: true);
         m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
+        // PlayerUI
+        m_PlayerUI = asset.FindActionMap("PlayerUI", throwIfNotFound: true);
+        m_PlayerUI_Inventory = m_PlayerUI.FindAction("Inventory", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1014,6 +1044,39 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         }
     }
     public UIActions @UI => new UIActions(this);
+
+    // PlayerUI
+    private readonly InputActionMap m_PlayerUI;
+    private IPlayerUIActions m_PlayerUIActionsCallbackInterface;
+    private readonly InputAction m_PlayerUI_Inventory;
+    public struct PlayerUIActions
+    {
+        private @PlayerControls m_Wrapper;
+        public PlayerUIActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Inventory => m_Wrapper.m_PlayerUI_Inventory;
+        public InputActionMap Get() { return m_Wrapper.m_PlayerUI; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(PlayerUIActions set) { return set.Get(); }
+        public void SetCallbacks(IPlayerUIActions instance)
+        {
+            if (m_Wrapper.m_PlayerUIActionsCallbackInterface != null)
+            {
+                @Inventory.started -= m_Wrapper.m_PlayerUIActionsCallbackInterface.OnInventory;
+                @Inventory.performed -= m_Wrapper.m_PlayerUIActionsCallbackInterface.OnInventory;
+                @Inventory.canceled -= m_Wrapper.m_PlayerUIActionsCallbackInterface.OnInventory;
+            }
+            m_Wrapper.m_PlayerUIActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Inventory.started += instance.OnInventory;
+                @Inventory.performed += instance.OnInventory;
+                @Inventory.canceled += instance.OnInventory;
+            }
+        }
+    }
+    public PlayerUIActions @PlayerUI => new PlayerUIActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -1078,5 +1141,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnRightClick(InputAction.CallbackContext context);
         void OnTrackedDevicePosition(InputAction.CallbackContext context);
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
+    }
+    public interface IPlayerUIActions
+    {
+        void OnInventory(InputAction.CallbackContext context);
     }
 }

@@ -16,3 +16,5 @@ MonoBehaviour:
   MaxCapacity: 100
   Visual: {fileID: 3244622203517571467, guid: d9c7df35c6600dd42b897ce1d9ae898b, type: 3}
   Value: 5
+  Name: Diamond
+  Description: Ooo! Even shinier and more valuable.

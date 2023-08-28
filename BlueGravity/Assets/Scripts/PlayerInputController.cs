@@ -21,13 +21,15 @@ namespace GravityBlue
             }
             controls.Enable();
 
+            controls.PlayerUI.Disable();
+
             controls.Player.Move.performed += input => movement.SetMovementDirection(input.ReadValue<Vector2>());
             controls.Player.Move.canceled += input => movement.SetMovementDirection(input.ReadValue<Vector2>());
 
-            controls.Player.Interact.performed += input =>
-            {
-                interaction.InteractWithObject();
-            };
+            controls.Player.Interact.performed += input => { interaction.InteractWithObject(); };
+            controls.Player.Inventory.performed += input => { storageUI.DisplayStorage(); storageUI.UpdateStorageDisplay(PlayerStorage.Instance.storage); };
+
+            controls.PlayerUI.Inventory.performed += input => { storageUI.HideStorage(); };
         }
         private void OnDisable()
         {
@@ -36,6 +38,9 @@ namespace GravityBlue
             controls.Player.Move.canceled -= input => movement.SetMovementDirection(input.ReadValue<Vector2>());
 
             controls.Player.Interact.performed -= input => { interaction.InteractWithObject(); };
+            controls.Player.Inventory.performed -= input => { storageUI.DisplayStorage(); storageUI.UpdateStorageDisplay(PlayerStorage.Instance.storage); };
+
+            controls.PlayerUI.Inventory.performed -= input => { storageUI.HideStorage(); };
         }
 
         private void Update()
@@ -50,7 +55,7 @@ namespace GravityBlue
 
         [SerializeField] private MovementController movement;
         [SerializeField] private Interaction.InteractionController interaction;
-        [SerializeField] private PlayerStorage storage;
+        [SerializeField] private StorageDisplay storageUI;
 
         private PlayerControls controls;
         #endregion
@@ -59,10 +64,13 @@ namespace GravityBlue
         public void DisableGeneralControls()
         {
             controls.Player.Disable();
+            controls.PlayerUI.Enable();
+
         }
         public void EnableGeneralControls()
         {
             controls.Player.Enable();
+            controls.PlayerUI.Disable();
         }
         #endregion
 
