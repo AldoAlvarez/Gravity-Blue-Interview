@@ -29,6 +29,9 @@ namespace GravityBlue
         {
             storage.AddItem(item,1);
         }
+        public void StorageItem(GameItemData item) {
+            storage.AddItem(item, 1);
+        }
         public GameItemData RetrieveItem(uint id, int count=1) {
             return storage.RetrieveItems(id, count);
         }

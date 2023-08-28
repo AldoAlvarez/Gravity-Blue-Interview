@@ -1,3 +1,4 @@
+using GravityBlue.Data;
 using GravityBlue.UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,10 +11,7 @@ namespace GravityBlue
         #region UNITY METHODS
         private void Start()
         {
-            shop = new Storage();
-            foreach (var item in shopItems) {
-                shop.AddItem(item.item, item.count);
-            }
+            UpdateShop();
         }
 
         private void Update()
@@ -23,27 +21,44 @@ namespace GravityBlue
         #endregion
 
         #region VARIABLES
-        private Storage shop;
+        public Storage shop;
         [SerializeField] private StorageItem[] shopItems;
-        //[SerializeField] private StorageDisplay shopDisplay;
+        private float sellValue;
+        private float buyValue;
         #endregion
 
         #region PUBLIC METHODS
         public void Open(float buyPrice, float sellPrice)
+        {
+            UpdateShop();
+            ShopUI.Instance.SetShop(this, buyPrice, sellPrice);
+
+            sellValue = sellPrice;
+            buyValue = buyPrice;
+        }
+        public void BuyItem(GameItemData item, int price) {
+            uint requiredItem = item.TradeItem;
+
+            var tradeItem = PlayerStorage.Instance.RetrieveItem(requiredItem, price);
+            if (tradeItem.ID == 0) return;
+
+            PlayerStorage.Instance.StorageItem(item);
+            shop.RetrieveItems(item.ID);
+
+            UpdateShop();
+            ShopUI.Instance.SetShop(this, buyValue, sellValue);
+
+        }
+        #endregion
+
+        #region PRIVATE METHODS
+        private void UpdateShop()
         {
             shop = new Storage();
             foreach (var item in shopItems)
             {
                 shop.AddItem(item.item, item.count);
             }
-            ShopUI.Instance.SetShop(shop, buyPrice, sellPrice);
-        }
-        #endregion
-
-        #region PRIVATE METHODS
-        private void method()
-        {
-            
         }
         #endregion
     }

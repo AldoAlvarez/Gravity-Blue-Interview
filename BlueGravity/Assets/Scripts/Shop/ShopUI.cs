@@ -37,15 +37,18 @@ namespace GravityBlue.UI
         [SerializeField] private TMP_Text price_sell_label;
 
         [SerializeField] private StorageDisplay shopDisplay;
+        private Shop currentShop;
+        private GameItemData currentItem;
         #endregion
 
         #region PUBLIC METHODS
-        public void SetShop(Storage shop, float buyValue, float sellValue) {
+        public void SetShop(Shop shop, float buyValue, float sellValue) {
             shopDisplay.DisplayStorage();
-            shopDisplay.UpdateStorageDisplay(shop);
+            shopDisplay.UpdateStorageDisplay(shop.shop);
+            currentShop = shop;
 
-            var items = shop.GetStoredItems();
-            for (int i = 0; i < shop.GetStoredItems().Count; i++)
+            var items = shop.shop.GetStoredItems();
+            for (int i = 0; i < shop.shop.GetStoredItems().Count; i++)
             {
                 var display = shopDisplay.ScrollContent.GetChild(i);
                 var poolable = display.GetComponent<PoolableObject>();
@@ -53,7 +56,9 @@ namespace GravityBlue.UI
                 var itemButton = display.GetComponent<Button>();
                 int index = i;
                 itemButton.onClick.AddListener(() => {
-                    UpdateItemDataDisplay(GameItemsArchive.Instance.GetItem(items[index]), buyValue, sellValue);
+                    var item = GameItemsArchive.Instance.GetItem(items[index]);
+                    UpdateItemDataDisplay(item, buyValue, sellValue);
+                    currentItem = item;
                 });
             }
         }
@@ -74,6 +79,10 @@ namespace GravityBlue.UI
         public void SetGreeting(string message) {
             greetingDisplay.text = message;
         }
+        public void BuyCurrentItem() {
+            if (currentItem == null) return;
+            currentShop.BuyItem(currentItem, int.Parse(price_sell_label.text));
+        }
         #endregion
 
         #region PRIVATE METHODS
@@ -81,6 +90,7 @@ namespace GravityBlue.UI
         {
             price_sell_label.text = "";
             requieredMaterial.sprite = null;
+            currentItem = null;
             for (int i = 0; i < shopDisplay.ScrollContent.childCount; i++)
             {
                 var poolable = shopDisplay.ScrollContent.GetChild(i).GetComponent<PoolableObject>();
