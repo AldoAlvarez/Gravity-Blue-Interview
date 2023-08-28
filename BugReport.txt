@@ -1,0 +1,11 @@
+Known bugs:
+	- The shop will allow for the player to buy 1 more item from the vendor
+	- The shop inventory will not be visually updated correctly after buying items
+
+Missing features:
+	- For the player and vendors' storage to be saved
+
+
+
+
+
