@@ -47,8 +47,11 @@ namespace GravityBlue
         #region VARIABLES
         public static PlayerInputController Instance => instance;
         private static PlayerInputController instance;
+
         [SerializeField] private MovementController movement;
         [SerializeField] private Interaction.InteractionController interaction;
+        [SerializeField] private PlayerStorage storage;
+
         private PlayerControls controls;
         #endregion
 

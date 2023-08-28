@@ -23,6 +23,7 @@ namespace GravityBlue
         #region VARIABLES
         public static GameItemsController Instance => instance;
         private static GameItemsController instance;
+
         [SerializeField] private Transform spawnPoint;
         [SerializeField] private ObjectPool itemsPool;
         #endregion

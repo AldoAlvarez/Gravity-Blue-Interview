@@ -40,7 +40,7 @@ namespace GravityBlue
             spriteRender.sprite = data.Visual;
             ID = data.ID;
         }
-        public void Interact() {
+        public virtual void Interact() {
             Despawn();
         /*
          * if(Storage.HasSpace())
