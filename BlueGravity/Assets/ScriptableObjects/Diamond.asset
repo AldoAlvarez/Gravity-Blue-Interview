@@ -15,7 +15,7 @@ MonoBehaviour:
   ID: 1002
   MaxCapacity: 100
   Visual: {fileID: 3244622203517571467, guid: d9c7df35c6600dd42b897ce1d9ae898b, type: 3}
-  Value: 1
+  Value: 10
   TradeItem: 1001
-  Name: Diamond
   Description: Ooo! Even shinier and more valuable.
+  sound: {fileID: 8300000, guid: 40465686c18415342afeea225efe9694, type: 3}

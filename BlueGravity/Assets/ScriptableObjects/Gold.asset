@@ -17,5 +17,5 @@ MonoBehaviour:
   Visual: {fileID: 21300000, guid: 87850260d0f08224e887e1c55590c081, type: 3}
   Value: 1
   TradeItem: 1001
-  Name: Gold
   Description: Shiny and valuable
+  sound: {fileID: 8300000, guid: 9fbb0a534b38ddd4ab1dc835f42afe57, type: 3}

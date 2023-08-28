@@ -31,6 +31,7 @@ namespace GravityBlue
 
         [SerializeField]
         private SpriteRenderer spriteRender;
+        [SerializeField] private AudioClip sound;
         #endregion
 
         #region PUBLIC METHODS
@@ -38,10 +39,12 @@ namespace GravityBlue
         {
             PrepareRenderer();
             spriteRender.sprite = data.Visual;
+            sound = data.sound;
             ID = data.ID;
         }
         public virtual void Interact() {
             Despawn();
+            AudioController.Instance.PlaySound(sound);
         /*
          * if(Storage.HasSpace())
          * {

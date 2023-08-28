@@ -15,9 +15,10 @@ namespace GravityBlue.Data
         public Sprite Visual;
         public ushort Value = 1;
         public uint TradeItem =0;
-        public string Name;
+        //public string Name;
         [TextArea]
         public string Description;
+        public AudioClip sound;
         #endregion
 
     }

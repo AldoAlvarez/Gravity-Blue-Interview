@@ -29,6 +29,8 @@ namespace GravityBlue
             controls.Player.Interact.performed += input => { interaction.InteractWithObject(); };
             controls.Player.Inventory.performed += input => { storageUI.DisplayStorage(); storageUI.UpdateStorageDisplay(PlayerStorage.Instance.storage); PlayerStorage.Instance.Open(); };
 
+            controls.Player.Escape.performed += input => { exitMenu.SetActive(true); controls.Disable(); };
+
             controls.PlayerUI.Inventory.performed += input => { storageUI.HideStorage(); };
         }
         private void OnDisable()
@@ -39,6 +41,8 @@ namespace GravityBlue
 
             controls.Player.Interact.performed -= input => { interaction.InteractWithObject(); };
             controls.Player.Inventory.performed -= input => { storageUI.DisplayStorage(); storageUI.UpdateStorageDisplay(PlayerStorage.Instance.storage); PlayerStorage.Instance.Open(); };
+
+            controls.Player.Escape.performed -= input => { exitMenu.SetActive(true); controls.Disable(); };
 
             controls.PlayerUI.Inventory.performed -= input => { storageUI.HideStorage(); };
         }
@@ -56,6 +60,8 @@ namespace GravityBlue
         [SerializeField] private MovementController movement;
         [SerializeField] private Interaction.InteractionController interaction;
         [SerializeField] private StorageDisplay storageUI;
+
+        [SerializeField] private GameObject exitMenu;
 
         private PlayerControls controls;
         #endregion

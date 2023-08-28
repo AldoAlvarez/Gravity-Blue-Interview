@@ -15,7 +15,7 @@ MonoBehaviour:
   ID: 2001
   MaxCapacity: 1
   Visual: {fileID: 21300004, guid: 9caa2d1bf58529846b51604707b587f6, type: 3}
-  Value: 0
+  Value: 1
   TradeItem: 1001
-  Name: 
   Description: Basic outfit
+  sound: {fileID: 8300000, guid: cae5769065a0f954fa1e76788d949c1e, type: 3}

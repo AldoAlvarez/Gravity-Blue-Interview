@@ -17,5 +17,5 @@ MonoBehaviour:
   Visual: {fileID: 21300004, guid: 25dbfbd01b6dc0c49a048b76d7f7368f, type: 3}
   Value: 1
   TradeItem: 1001
-  Name: 
   Description: Not so basic outfit
+  sound: {fileID: 8300000, guid: cae5769065a0f954fa1e76788d949c1e, type: 3}
