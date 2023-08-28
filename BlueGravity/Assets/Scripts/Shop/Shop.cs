@@ -45,7 +45,7 @@ namespace GravityBlue
             PlayerStorage.Instance.StorageItem(item);
             shop.RetrieveItems(item.ID);
 
-            UpdateShop();
+            //UpdateShop();
             ShopUI.Instance.SetShop(this, buyValue, sellValue);
 
         }
