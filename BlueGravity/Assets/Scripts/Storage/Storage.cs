@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace GravityBlue
 {
+    [System.Serializable]
     public class Storage
     {
         #region CONSTRUCTORS
@@ -22,8 +23,12 @@ namespace GravityBlue
         #region PUBLIC METHODS
         public void AddItem(GameItem item, int count)
         {
+            AddItem(GameItemsArchive.Instance.GetItem(item.ID), count);
+        }
+        public void AddItem(GameItemData item, int count) {
             var id = item.ID;
-            if (containedItems.ContainsKey(id)) {
+            if (containedItems.ContainsKey(id))
+            {
                 var it = containedItems[id];
                 it.Add(count);
                 containedItems[id] = it;
@@ -33,12 +38,16 @@ namespace GravityBlue
             if (containedItems.Count >= MaxCapacity) return;
 
             var itemConfig = GameItemsArchive.Instance.GetItem(item.ID);
-            containedItems.Add(id, new StorageItem(itemConfig));
+            containedItems.Add(id, new StorageItem(itemConfig,count));
         }
-        public GameItemData RetrieveItem(uint id) {
+        public GameItemData RetrieveItems(uint id, int count=1) {
             if (!containedItems.ContainsKey(id)) return new GameItemData() { ID = 0, Value = 0, MaxCapacity = 1 };
+
             var it = containedItems[id];
-            it.TakeOut(1);
+
+            if (it.count < count) return new GameItemData() { ID = 0, Value = 0, MaxCapacity = 1 }; ;
+
+            it.TakeOut(count);
             containedItems[id] = it;
 
             if (containedItems[id].count <= 0) containedItems.Remove(id);

@@ -25,6 +25,7 @@ namespace GravityBlue.NPCs
         private string greetingMessage="Welcome to my shop! What are you interested in?";
         [SerializeField, Range(0, 2)] private float SellValue = 1.2f;
         [SerializeField, Range(0, 2)] private float BuyValue = 0.8f;
+        [SerializeField] private Shop shop;
         #endregion
 
         #region PUBLIC METHODS
@@ -33,6 +34,7 @@ namespace GravityBlue.NPCs
             PlayerInputController.Instance.DisableGeneralControls();
             ShopUI.Instance.Show();
             ShopUI.Instance.SetGreeting(greetingMessage);
+            shop.Open(BuyValue, SellValue);
             //Shop.Instance.SetSellBuyValues(SellValue, BuyValue);
         }
         #endregion

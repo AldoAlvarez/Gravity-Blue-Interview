@@ -29,8 +29,8 @@ namespace GravityBlue
         {
             storage.AddItem(item,1);
         }
-        public GameItemData RetrieveItem(uint id) {
-            return storage.RetrieveItem(id);
+        public GameItemData RetrieveItem(uint id, int count=1) {
+            return storage.RetrieveItems(id, count);
         }
         #endregion
 

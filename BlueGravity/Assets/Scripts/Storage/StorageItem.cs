@@ -9,10 +9,10 @@ namespace GravityBlue
     public struct StorageItem
     {
         #region CONSTRUCTORS
-        public StorageItem(GameItemData config)
+        public StorageItem(GameItemData config, int amount)
         {
             item = config;
-            count = 1;
+            count = amount;
         }
         #endregion
 

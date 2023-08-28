@@ -17,8 +17,8 @@ namespace GravityBlue
         #endregion
 
         #region VARIABLES
+        public RectTransform ScrollContent;
         [SerializeField] private GameObject StorageMenu;
-        [SerializeField] private RectTransform ScrollContent;
         [SerializeField] private int ItemsPerRow=4;
         [SerializeField] private Vector2 ItemsSeparation;
         [SerializeField] private ObjectPool ItemDisplays;
@@ -42,7 +42,7 @@ namespace GravityBlue
             ResizeContentBox(items.Count);
             SpawnItemsDisplays(items.Count);
             InitializeItemsDisplays(storage);
-            ItemDescription.text = "";
+            WriteItemDescription(string.Empty);
         }
         #endregion
 
@@ -89,7 +89,12 @@ namespace GravityBlue
             ScrollContent.sizeDelta = new Vector2(ScrollContent.sizeDelta.x, height);
         }
         private void DescibeItem(uint id) {
-            ItemDescription.text = GameItemsArchive.Instance.GetItem(id).Description;
+            var description = GameItemsArchive.Instance.GetItem(id).Description;
+            WriteItemDescription(description);
+        }
+        private void WriteItemDescription(string description) {
+            if (ItemDescription == null) return;
+            ItemDescription.text = description;
         }
         #endregion
     }

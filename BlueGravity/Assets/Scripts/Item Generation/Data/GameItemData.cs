@@ -14,6 +14,7 @@ namespace GravityBlue.Data
         public ushort MaxCapacity = 100;
         public Sprite Visual;
         public ushort Value = 1;
+        public uint TradeItem =0;
         public string Name;
         [TextArea]
         public string Description;
