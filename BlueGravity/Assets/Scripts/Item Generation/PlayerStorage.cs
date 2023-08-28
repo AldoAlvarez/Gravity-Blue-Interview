@@ -2,6 +2,7 @@ using GravityBlue.Data;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace GravityBlue
 {
@@ -22,6 +23,7 @@ namespace GravityBlue
         private static PlayerStorage instance;
 
         public Storage storage { get; private set; }
+        [SerializeField] private RectTransform storageDisplayContainer;
         #endregion
 
         #region PUBLIC METHODS
@@ -34,6 +36,20 @@ namespace GravityBlue
         }
         public GameItemData RetrieveItem(uint id, int count=1) {
             return storage.RetrieveItems(id, count);
+        }
+        public void Open() {
+            var items = storage.GetStoredItems();
+            for (int i = 0; i < storageDisplayContainer.childCount; i++)
+            {
+                var button = storageDisplayContainer.GetChild(i).GetComponent<Button>();
+                var index = i;
+                button.onClick.AddListener(() => {
+                    var item = GameItemsArchive.Instance.GetItem(items[index]);
+                    if (item.ID > 2000) {
+                        PlayerAvatar.Instance.SetOutfit(item.Visual);
+                    }
+                });
+            }
         }
         #endregion
 

@@ -27,7 +27,7 @@ namespace GravityBlue
             controls.Player.Move.canceled += input => movement.SetMovementDirection(input.ReadValue<Vector2>());
 
             controls.Player.Interact.performed += input => { interaction.InteractWithObject(); };
-            controls.Player.Inventory.performed += input => { storageUI.DisplayStorage(); storageUI.UpdateStorageDisplay(PlayerStorage.Instance.storage); };
+            controls.Player.Inventory.performed += input => { storageUI.DisplayStorage(); storageUI.UpdateStorageDisplay(PlayerStorage.Instance.storage); PlayerStorage.Instance.Open(); };
 
             controls.PlayerUI.Inventory.performed += input => { storageUI.HideStorage(); };
         }
@@ -38,7 +38,7 @@ namespace GravityBlue
             controls.Player.Move.canceled -= input => movement.SetMovementDirection(input.ReadValue<Vector2>());
 
             controls.Player.Interact.performed -= input => { interaction.InteractWithObject(); };
-            controls.Player.Inventory.performed -= input => { storageUI.DisplayStorage(); storageUI.UpdateStorageDisplay(PlayerStorage.Instance.storage); };
+            controls.Player.Inventory.performed -= input => { storageUI.DisplayStorage(); storageUI.UpdateStorageDisplay(PlayerStorage.Instance.storage); PlayerStorage.Instance.Open(); };
 
             controls.PlayerUI.Inventory.performed -= input => { storageUI.HideStorage(); };
         }
